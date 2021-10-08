@@ -74,31 +74,41 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(child: TextField(controller: myController)),
                   ],
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    ref.child(name).set(myController.text);
-                  },
-                  child: Text("Submit"),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          ref.child(name).set(myController.text);
+                        },
+                        child: Text("Submit"),
+                      ),
+
+                      ElevatedButton(
+                          onPressed: () {
+                            ref.child('Name').once().then((DataSnapshot data) {
+                              updateText(data.value);
+                            });
+                          }, child: Text('Retrieve')),
+
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Next()));
+
+                        },
+                        child: Text('Next'),
+                        color: Colors.purple,
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0)
+                        ),)
+                    ],
+                  ),
                 ),
 
-                ElevatedButton(
-                    onPressed: () {
-                    ref.child('Name').once().then((DataSnapshot data) {
-                      updateText(data.value);
-                    });
-                    }, child: Text('Retrieve')),
-                
-                MaterialButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Next()));
-                      
-                    },
-                child: Text('Next'),
-                color: Colors.purple,
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0)
-                ),)
+
               ],
             ))
     );
